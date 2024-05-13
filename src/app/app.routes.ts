@@ -7,9 +7,9 @@ import { ContactComponent } from './contact/contact.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
-  { path: 'dashboard', component: DashboardComponent },
-  { path: 'login', component: LoginComponent },
-  { path: 'admin', component: AdminComponent },
-  { path: 'contact', component: ContactComponent },
+  { path: '/dashboard', component: DashboardComponent },
+  { path: '/login', component: LoginComponent },
+  { path: '/admin', component: AdminComponent },
+  { path: '/contact', component: ContactComponent },
   { path: '**', component: PageNotFoundComponent }
 ];

@@ -1,25 +1,47 @@
-import { Injectable } from '@angular/core';
+import { Injectable, NgZone } from '@angular/core';
 import { SwUpdate } from '@angular/service-worker';
+import { Subscription, interval } from 'rxjs';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable({providedIn: 'root'})
 export class LogUpdateService {
 
-  constructor(updates: SwUpdate) {
-    updates.versionUpdates.subscribe(evt => {
-      switch (evt.type) {
-        case 'VERSION_DETECTED':
-          console.log(`Downloading new app version: ${evt.version.hash}`);
-          break;
-        case 'VERSION_READY':
-          console.log(`Current app version: ${evt.currentVersion.hash}`);
-          console.log(`New app version ready for use: ${evt.latestVersion.hash}`);
-          break;
-        case 'VERSION_INSTALLATION_FAILED':
-          console.log(`Failed to install app version '${evt.version.hash}': ${evt.error}`);
-          break;
-      }
-    });
+  isNewVersionAvailable: boolean = false;
+  //intervalSource = interval(15 * 60 * 1000); // every 15 mins
+  intervalSource = interval(3 * 1000); // every 3 s
+  intervalSubscription?: Subscription;
+
+  constructor( private swUpdate: SwUpdate, private zone: NgZone ) {
+    this.checkForUpdate();
   }
+
+  stopCheckForUpdate() {
+    this.intervalSubscription?.unsubscribe();
+    this.intervalSubscription=undefined;
+  }
+
+  checkForUpdate(): void {
+    this.intervalSubscription?.unsubscribe();
+    if (!this.swUpdate.isEnabled) {
+        return;
+    }
+
+    this.zone.runOutsideAngular(() => {
+        this.intervalSubscription = this.intervalSource.subscribe(async () => {
+            try {
+                this.isNewVersionAvailable = await this.swUpdate.checkForUpdate();
+                console.log(this.isNewVersionAvailable ? 'A new version is available.' : 'Already on the latest version.');
+            } catch (error) {
+                console.error('Failed to check for updates:', error);
+            }
+        });
+    })
+  }
+
+  applyUpdate(): void {
+    // Reload the page to update to the latest version after the new version is activated
+    this.swUpdate.activateUpdate()
+        .then(() => document.location.reload())
+        .catch(error => console.error('Failed to apply updates:', error));
+  }
+
 }

@@ -1,4 +1,4 @@
-<h1>Version V6 is runnning ...</h1>
+<h1>Version V7 is runnning ...</h1>
 <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" (click)="refreshTimer()">
   Refresh Timer
 </button>
@@ -7,8 +7,10 @@
     type="text" 
     placeholder="Username" [(ngModel)]="timer">
 
-<button class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded" routerLink="/login">Login</button>
-<button class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded" routerLink="/admin">Admin</button>
-<button class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded" routerLink="/dashboard">Dashboard</button>
-<button class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded" routerLink="/contact">Contact</button>
+<div class="buttons-grid">
+  <button class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded" routerLink="/login">Login</button>
+  <button class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded" routerLink="/admin">Admin</button>
+  <button class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded" routerLink="/dashboard">Dashboard</button>
+  <button class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded" routerLink="/contact">Contact</button>
+</div>
 <router-outlet />

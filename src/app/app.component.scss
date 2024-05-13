@@ -1,3 +1,10 @@
 body {
   background-color:olive;
 }
+
+.buttons-grid {
+  display: grid;
+  grid-auto-flow: column;
+  grid-column-gap: 10px;
+}
+

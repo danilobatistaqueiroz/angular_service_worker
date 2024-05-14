@@ -45,12 +45,26 @@ To bypass the service worker, set ngsw-bypass as a request header, or as a query
 #### Steps for Service Worker
 
 Creating the project:  
-ng new workers --routing --standalone --strict --style scss
+`ng new workers --routing --standalone --strict --style scss`  
 
 Adding a service worker:  
-ng add @angular/pwa
+`ng add @angular/pwa`  
 
 Adding tailwind:  
 `pnpm install -D tailwindcss postcss autoprefixer`  
 `npx tailwindcss init`  
 
+
+#### How it works
+
+Running your application you will receive a popup asking to install your application.  
+
+You can activate a timer to check if there is a new app version published on the server.  
+
+If a new version of your angular application was published in your server, a red button will be shown to update your app.  
+
+Open the inspector, go to Application tab, in Service Workers you can see your application, in cache storage are all files cached.  
+
+Go to Network tab, change throlling to offline and refresh the browser.  
+
+The advantage of Service Workers is that the startup is fast, your site is cached, and can be installed, receive push notifications

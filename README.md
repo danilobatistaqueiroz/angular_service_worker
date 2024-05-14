@@ -20,9 +20,25 @@ SwPush for doing server Web Push notifications
 
 >>> If you are not using HTTPS, the service worker will only be registered when accessing the application on localhost.
 
+
+#### Cache
+
+Resources, especially those loaded from CDNs, have content that is unknown at build time or are updated more frequently than the application is deployed.  
+If the Angular service worker does not have a hash to verify a resource is valid, it still caches its contents.  
+At the same time, it honors the HTTP caching headers by using a policy of stale while revalidate.  
+The Angular service worker continues to serve a resource even after its HTTP caching headers indicate that it is no longer valid.  
+At the same time, it attempts to refresh the expired resource in the background.  
+This way, broken unhashed resources do not remain in the cache beyond their configured lifetimes.  
+
 #### Home Screen button
 When will the Install to Home Screen button be shown to the user?  
 There are a couple of conditions for this to work, one of them being that the application needs to run over HTTPS and have a Service Worker.
+
+#### Bypassing the service worker
+
+To bypass the service worker, set ngsw-bypass as a request header, or as a query parameter. The value of the header or query parameter is ignored and can be empty or omitted.
+
+
 
 
 
